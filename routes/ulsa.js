@@ -20,7 +20,7 @@ const {
   router.post('/loanReadObject', verifyJwt,loanReadObject);
   router.post('/loanDeleteObject', verifyJwt,loanDeleteObject);
 
-  router.get('/searchObject',searchObj)
-  router.get('/searchLoan',searchLoan)
+  router.get('/searchObject',verifyJwt,searchObj)
+  router.get('/searchLoan',verifyJwt,searchLoan)
   module.exports = router;
     

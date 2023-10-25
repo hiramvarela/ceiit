@@ -40,7 +40,7 @@ async function verifyJwt(req, res, next) {
             return res.status(401).json({ message: "Formato de token incorrecto" });
         }
     } else {
-        return res.status(401).json({ message: "Token no proporcionado" });
+        return res.status(401).json({ message: "Usuario no autentificado" });
     }
 }
 
