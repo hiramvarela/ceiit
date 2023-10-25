@@ -1,5 +1,4 @@
 
-
 const Object = require("../models/ceiit.models").Object;
 const Loan = require("../models/loan.models.js").Loan;
 
@@ -44,6 +43,7 @@ async function searchLoan(req,res){
     } catch (error) {
         res.status(500).send(error);
     }
+
 }
 async function changeStatus(req,res){
     const qr = req.body.qr;

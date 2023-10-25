@@ -27,34 +27,43 @@ async function loanObject(req, res){
 		console.log(err);
 	}
 }
-//PENDIENTE
-// async function updateObject(req,res){
-// 	const object = req.body.ob;
-// 	const numberS = req.body.num;
-//     const ubica = req.body.ubi;
-//     const descrip = req.body.des;
-//     const canti = req.body.cant;
-    
-// 	try{
-// 		const updateOb = await Object.updateOne({
-// 			name:object
-		
-// 		},{
-// 			$set : {
-				
-// 			}
-// 		});
-//         if(!updateOb){
-// 			res.status(401).json({mensaje: "No se encontro el objecto"})
-// 		}
-// 		res.json({
-// 			obj : updateOb
-// 		})
-// 	}catch(err){
-// 		console.log(err)
-// 		res.status(500).json({mensaje : "Hubo un error al buscar el objecto"})
-// 	}
-// }
+
+
+async function loanUpdateObject(req,res){
+	const loanId = req.body.id;
+	const tuit = req.body.tuiti;
+	const nameObj = req.body.no;
+    const da = req.body.dat;
+    const numS = req.body.ns;
+    const canti = req.body.cant;
+
+	try{
+		const updatedLoan = await Loan.updateOne(
+            { id: loanId }, // filtro o condición
+            {
+                // campos a actualizar
+                tuition: tuit,
+                nameObject: nameObj,
+                date: da,
+                numSerial: numS,
+                cantidad: canti
+            }
+        );
+
+        if(updatedLoan.nModified === 0){ // si no se modificó ningún documento
+            return res.status(404).json({ mensaje: "No se encontró el préstamo con el ID proporcionado" });
+        }
+
+		res.json({
+			obj: updatedLoan
+		});
+	}catch(err){
+		console.log(err)
+		res.status(500).json({mensaje : "Hubo un error al actualizar el préstamo"})
+	}
+}
+
+
 async function loanDeleteObject(req,res){
 	const id = req.body.id;
 	try{
@@ -94,5 +103,7 @@ async function loanReadObject(req,res){
 }
 
 module.exports = {
-	loanObject, loanDeleteObject,loanReadObject
+
+	loanObject, loanDeleteObject,loanReadObject,loanUpdateObject
+
 };
