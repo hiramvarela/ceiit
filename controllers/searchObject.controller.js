@@ -1,4 +1,5 @@
 
+
 const Object = require("../models/ceiit.models").Object;
 const Loan = require("../models/loan.models.js").Loan;
 
@@ -48,4 +49,5 @@ async function searchLoan(req,res){
 module.exports = {
     searchObj, searchLoan
 };
+
 
