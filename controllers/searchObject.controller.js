@@ -1,98 +1,53 @@
+
+
+const Object = require("../models/ceiit.models").Object;
 const Loan = require("../models/loan.models.js").Loan;
 
-async function loanObject(req, res){
-    const id = req.body.id;
-	const tuit = req.body.tuiti;
-	const nameObj = req.body.no;
-    const da = req.body.dat;
-    const numS = req.body.ns;
-    const canti = req.body.cant;
+async function searchObj(req, res) {
+    const objecto = req.body.ob;
+    const nums = req.body.num;
+    const ubica = req.body.ubi;
 
-	try {
-		const newLoan = await new Loan({
-            id:id,
-			tuition:tuit,
-			nameObject: nameObj,
-            date : da,
-            numSerial: numS,
-            cantidad : canti
-		}).save();
+    // Construir el objeto de consulta con los valores proporcionados
+    const query = {};
 
-		res.json({
-			obj: newLoan
+    if (objecto) {
+        query.name = objecto;
+    }
 
+    if (nums) {
+        query.numserial = nums;
+    }
 
-		})
-	} catch (err) {
-		console.log(err);
-	}
-}
-//PENDIENTE
-// async function updateObject(req,res){
-// 	const object = req.body.ob;
-// 	const numberS = req.body.num;
-//     const ubica = req.body.ubi;
-//     const descrip = req.body.des;
-//     const canti = req.body.cant;
-    
-// 	try{
-// 		const updateOb = await Object.updateOne({
-// 			name:object
-		
-// 		},{
-// 			$set : {
-				
-// 			}
-// 		});
-//         if(!updateOb){
-// 			res.status(401).json({mensaje: "No se encontro el objecto"})
-// 		}
-// 		res.json({
-// 			obj : updateOb
-// 		})
-// 	}catch(err){
-// 		console.log(err)
-// 		res.status(500).json({mensaje : "Hubo un error al buscar el objecto"})
-// 	}
-// }
-async function loanDeleteObject(req,res){
-	const id = req.body.id;
-	try{
-		const loan = await Loan.deleteOne({
-			id:id
-		});
-        if(!loan){
-			res.status(401).json({mensaje: "No se encontro el prestamo"})
-		}
-		res.json({
-			obj : loan
-		})
-	}catch(err){
-		console.log(err)
-		res.status(500).json({mensaje : "Hubo un error al borrar el prestamo"})
-	}
-}
-async function loanReadObject(req,res){
-	const id = req.body.id;
+    if (ubica) {
+        query.ubicacion = ubica;
+    }
 
-    
-	try{
-		const readLoan = await Loan.findOne({
-			id:id
-		
-		});
-        if(!readLoan){
-			res.status(401).json({mensaje: "No se encontro el prestamo"})
-		}
-		res.json({
-			obj : readLoan
-		})
-	}catch(err){
-		console.log(err)
-		res.status(500).json({mensaje : "Hubo un error al buscar el prestamo"})
-	}
+    try {
+        
+        const search = await Object.find(query);
+        res.status(200).send(search);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+async function searchLoan(req,res){
+    const matricula = req.body.tuiti;
+    const queryLoan = {};
+
+    if(matricula){
+        queryLoan.tuition = matricula;
+    }
+    try {
+        const searchLoan = await Loan.find(queryLoan);
+        res.status(200).send(searchLoan);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
 module.exports = {
-	loanObject, loanDeleteObject,loanReadObject
+    searchObj, searchLoan
 };
+
+

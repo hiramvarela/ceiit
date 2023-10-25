@@ -7,6 +7,9 @@ const {
 const  {
     loanObject,loanDeleteObject,loanReadObject
 } = require('../controllers/loan.controller.js');
+const {
+  searchObj, searchLoan
+} = require('../controllers/searchObject.controller.js')
 
   router.post('/addObject', verifyJwt,addObject);
   router.post('/readObject', verifyJwt,readObject);
@@ -17,6 +20,7 @@ const  {
   router.post('/loanReadObject', verifyJwt,loanReadObject);
   router.post('/loanDeleteObject', verifyJwt,loanDeleteObject);
 
-  
+  router.get('/searchObject',searchObj)
+  router.get('/searchLoan',searchLoan)
   module.exports = router;
     
