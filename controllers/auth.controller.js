@@ -22,29 +22,28 @@ async function firmaJwt(req, res) {
     }
 
 }
-async function verifyJwt(req, res,next) {
+async function verifyJwt(req, res, next) {
     const headerToken = req.headers.authorization;
-    let authToken;
-
-    if (headerToken && headerToken.length){
+    
+    if (headerToken) {
         const tokenParts = headerToken.split(' ');
-        if(tokenParts.length == 2){
-            authToken = tokenParts[1];
+        if(tokenParts.length == 2 && tokenParts[0] === "Bearer"){
+            const authToken = tokenParts[1];
+            try{
+                await jwt.verify(authToken, config.auth.secretKey);
+                next();
+            } catch(err){
+                console.error("INVALID TOKEN");
+                return res.status(401).json({ message: "Token inválido" });
+            }
+        } else {
+            return res.status(401).json({ message: "Formato de token incorrecto" });
         }
-        try{
-            await jwt.verify(authToken,config.auth.secretKey);
-            next();
-        }catch(err){
-            console.error("INVALID TOKEN");
-        }
-    } else{
-        res.status(500).json({
-            
-        });
+    } else {
+        return res.status(401).json({ message: "Token no proporcionado" });
     }
-    console.log(headerToken);
-    res.status(200);
 }
+
 module.exports = {
     firmaJwt,
     verifyJwt

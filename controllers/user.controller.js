@@ -31,8 +31,11 @@ async function iniciarSesion(req,res){
         if(!newSesion){
 			res.status(401).json({mensaje: "No se encontro el usuario"})
 		}
+
+		const token = jwt.sign({ id: user._id }, config.auth.secretKey, { expiresIn: '1h' });	
 		res.json({
-			obj : newSesion
+			obj : newSesion,
+			token: token
 		})
 	}catch(err){
 		console.log(err)
