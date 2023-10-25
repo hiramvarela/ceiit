@@ -45,9 +45,35 @@ async function searchLoan(req,res){
         res.status(500).send(error);
     }
 }
+async function changeStatus(req,res){
+    const qr = req.body.qr;
+
+    if (!qr) {
+        return res.status(400).send({ mensaje: "¡Se requiere el código QR!" });
+    }
+
+    try {
+        // Encuentra el objeto por su código QR
+        const objeto = await Object.findOne({ qr: qr });
+
+        if (!objeto) {
+            return res.status(404).send({ mensaje: "¡Objeto no encontrado!" });
+        }
+
+        // Cambia el estatus
+        objeto.status = !objeto.status;
+
+        // Guarda el objeto actualizado
+        await objeto.save();
+
+        res.status(200).send(objeto);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
 
 module.exports = {
-    searchObj, searchLoan
+    searchObj, searchLoan,changeStatus
 };
 
 

@@ -23,6 +23,10 @@ const objSchema = new mongoose.Schema({
     status:{
         type:Boolean,
         require:true
+    },
+    qr:{
+        type:String,
+        require:true
     }
 });
 
