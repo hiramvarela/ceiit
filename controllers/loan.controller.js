@@ -28,6 +28,7 @@ async function loanObject(req, res){
 	}
 }
 
+
 async function loanUpdateObject(req,res){
 	const loanId = req.body.id;
 	const tuit = req.body.tuiti;
@@ -61,6 +62,7 @@ async function loanUpdateObject(req,res){
 		res.status(500).json({mensaje : "Hubo un error al actualizar el préstamo"})
 	}
 }
+
 
 async function loanDeleteObject(req,res){
 	const id = req.body.id;
@@ -101,5 +103,7 @@ async function loanReadObject(req,res){
 }
 
 module.exports = {
+
 	loanObject, loanDeleteObject,loanReadObject,loanUpdateObject
+
 };

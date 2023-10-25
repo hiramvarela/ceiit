@@ -6,6 +6,8 @@ async function addObject(req, res){
     const ubica = req.body.ubi;
     const descrip = req.body.des;
     const canti = req.body.cant;
+	const estado = req.body.esta;
+	const qr = req.body.qr;
 
 	try {
 		const newObject = await new Object({
@@ -13,7 +15,9 @@ async function addObject(req, res){
 			numserial: numberS,
             ubicacion : ubica,
             descripcion: descrip,
-            cantidad : canti
+            cantidad : canti,
+			status : estado,
+			qr : qr
 		}).save();
 
 		res.json({

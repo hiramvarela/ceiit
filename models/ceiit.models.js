@@ -19,6 +19,14 @@ const objSchema = new mongoose.Schema({
     cantidad:{
         type: Number,
         require: true
+    },
+    status:{
+        type:Boolean,
+        require:true
+    },
+    qr:{
+        type:String,
+        require:true
     }
 });
 
