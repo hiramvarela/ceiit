@@ -1,4 +1,7 @@
 const User = require("../models/user.models").User;
+const jwt = require('jsonwebtoken');
+const { config } = require('../config/config');
+
 
 async function registrarUsuario(req, res){
 	const nombreUsuario = req.body.usrn;
@@ -32,7 +35,7 @@ async function iniciarSesion(req,res){
 			res.status(401).json({mensaje: "No se encontro el usuario"})
 		}
 
-		const token = jwt.sign({ id: user._id }, config.auth.secretKey, { expiresIn: '1h' });	
+		const token = jwt.sign({ id: newSesion._id }, config.auth.secretKey, { expiresIn: '1h' });	
 		res.json({
 			obj : newSesion,
 			token: token

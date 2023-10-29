@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const {
     config
 } = require('../config/config');
-const { head } = require('../routes');
 async function firmaJwt(req, res) {
     try {
         const nuevoToken = await jwt.sign(
